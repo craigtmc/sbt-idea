@@ -44,7 +44,7 @@ case class Directories(sources: Seq[File], resources: Seq[File], outDir: File) {
 case class DependencyProject(name: String, scope: IdeaLibrary.Scope)
 
 case class SubProjectInfo(baseDir: File, name: String,
-                          dependencyProjects: List[DependencyProject],
+                          dependencyProjects: List[DependencyProject], excludedFolders: Seq[String],
                           classpathDeps: Seq[(File, Seq[File])], compileDirs: Directories,
                           testDirs: Directories, libraries: Seq[IdeaModuleLibRef], scalaInstance: ScalaInstance,
                           ideaGroup: Option[String], webAppPath: Option[File], basePackage: Option[String],

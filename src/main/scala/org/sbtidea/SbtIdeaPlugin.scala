@@ -165,6 +165,7 @@ object SbtIdeaPlugin extends Plugin {
     val scalaInstance: ScalaInstance = settings.task(Keys.scalaInstance)
     val scalacOptions: Seq[String] = settings.optionalTask(Keys.scalacOptions in Compile).getOrElse(Seq())
     val baseDirectory = settings.setting(Keys.baseDirectory, "Missing base directory!")
+    val excludeFolders = settings.settingWithDefault(ideaExcludeFolders, Nil) :+ "target"
 
     def sourceDirectoriesFor(config: Configuration) = {
       val hasSourceGen = settings.optionalSetting(Keys.sourceGenerators in config).exists(!_.isEmpty)
@@ -244,7 +245,7 @@ object SbtIdeaPlugin extends Plugin {
       if (androidSupport.isDefined && shouldNotDex(lib.library.name)) lib.copy(config = IdeaLibrary.ProvidedScope) else lib
     }
 
-    SubProjectInfo(baseDirectory, projectName, dependencyProjects, classpathDeps, compileDirectories,
+    SubProjectInfo(baseDirectory, projectName, dependencyProjects, excludeFolders, classpathDeps, compileDirectories,
       testDirectories, dependencyLibs, scalaInstance, ideaGroup, None, basePackage, packagePrefix, extraFacets, scalacOptions,
       includeScalaFacet, androidSupport)
   }

@@ -60,7 +60,7 @@ class IdeaModuleDescriptor(val imlDir: File, projectRoot: File, val project: Sub
                 Seq(toExclude)
             }
 
-            env.excludedFolders
+            project.excludedFolders
               .map(entry => new File(project.baseDir, entry.trim))
               .flatMap(dontExcludeManagedSources)
               .sortBy(_.getName).map { exclude =>
